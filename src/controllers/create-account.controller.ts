@@ -1,11 +1,17 @@
+// src/controllers/create-account.controller.ts
 import {
   Body,
   ConflictException,
   Controller,
   HttpCode,
   Post,
+  UsePipes, // Import UsePipes
+  ValidationPipe, // Import ValidationPipe
 } from '@nestjs/common'
+import { hash } from 'bcryptjs'
+
 import { PrismaService } from 'src/prisma/prisma.service'
+import { CreateAccountBody } from './dtos/create-account-dto'
 
 @Controller('/accounts')
 export class CreateAccountController {
@@ -13,7 +19,8 @@ export class CreateAccountController {
 
   @Post()
   @HttpCode(201)
-  async handle(@Body() body: any) {
+  @UsePipes(new ValidationPipe())
+  async handle(@Body() body: CreateAccountBody) {
     const { name, email, password } = body
 
     const userWithSameEmail = await this.prisma.user.findUnique({
@@ -28,11 +35,13 @@ export class CreateAccountController {
       )
     }
 
+    const hashedPassword = await hash(password, 8)
+
     await this.prisma.user.create({
       data: {
         name,
         email,
-        password,
+        password: hashedPassword,
       },
     })
   }

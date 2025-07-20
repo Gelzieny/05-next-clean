@@ -1,22 +1,36 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "module": "commonjs", // CommonJS modules are standard for Node.js
+    "declaration": true, // Generate .d.ts files for your compiled code
+    "removeComments": true, // Remove comments from compiled JS files
+    "emitDecoratorMetadata": true, // Crucial for NestJS dependency injection and other features
+    "experimentalDecorators": true, // Crucial for NestJS decorators (@Controller, @Body, etc.)
+    "allowSyntheticDefaultImports": true, // Allows default imports from modules with no default export
+    "target": "ES2023", // Modern JavaScript target version
+    "sourceMap": true, // Generate sourcemaps for easier debugging
+    "outDir": "./dist", // Output directory for compiled JavaScript
+    "baseUrl": "./", // Base directory for resolving non-relative module names
+    "incremental": true, // Enables incremental compilation for faster rebuilds
+    "skipLibCheck": true, // Skip type checking of declaration files (e.g., in node_modules)
+    "strict": true, // Enable all strict type-checking options (recommended for robust code)
+    "strictNullChecks": true, // Ensures strict checking for null and undefined
+    // "strictPropertyInitialization": true, // Implied by "strict": true. Handled by '!' in DTOs.
+    "forceConsistentCasingInFileNames": true, // Enforce consistent casing in file names
+    // You've explicitly turned off some strict rules. If you're encountering issues
+    // with these, you can keep them off, but ideally, you'd address the underlying
+    // type safety issues. For now, keeping them as you had them:
+    "noImplicitAny": false, // Allows 'any' without explicit annotation (less strict)
+    "strictBindCallApply": false, // Less strict checking for bind, call, and apply methods
+    "noFallthroughCasesInSwitch": false // Allows fallthrough cases in switch statements
+    // "paths": { // Example if you want to use absolute imports like 'src/...'
+    //   "src/*": ["./src/*"]
+    // }
+  },
+  "include": [
+    "src/**/*.ts" // Include all .ts files in the src directory
+  ],
+  "exclude": [
+    "node_modules", // Exclude node_modules from compilation
+    "dist" // Exclude the output directory
+  ]
 }
